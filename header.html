@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    /* Navbar Styling */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  padding: 5px 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar-links a:hover {
+  background-color: white;
+  color: #007bff;
+  border-radius: 5px;
+}
+
+.navbar-links .active {
+  background-color: white;
+  color: #007bff;
+  border-radius: 5px;
+}
+
+.logout {
+  color: #ff4d4d;
+}
+
+.logout:hover {
+  background-color: white;
+  color: #ff4d4d;
+}
+
+/* Responsive Design */
+.navbar-toggler {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .navbar-links {
+    flex-direction: column;
+    background-color: #007bff;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    display: none;
+  }
+
+  .navbar-links li {
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+}
+    
+    </style>
+
+</head>
+
+
+<body>
+    <header>
+         <!--- <nav>
+            <h2>Mobile Billing</h2>
+            <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Conteact</li>
+            </ul>
+        </nav> -->
+        <!-- Navbar for admin 
+  <nav class="navbar">
+    <div class="navbar-brand">Mobile Billing System</div>
+    <button class="navbar-toggler" id="navbar-toggler">&#9776;</button>
+    <ul class="navbar-links" id="navbar-links">
+      <li><a href="#dashboard" class="active">Dashboard</a></li>
+      <li><a href="#customers">Customers</a></li>
+      <li><a href="#plans">Plans</a></li>
+      <li><a href="#billing">Billing</a></li>
+      <li><a href="#payments">Payments</a></li>
+      <li><a href="#notifications">Notifications</a></li>
+      <li><a href="#profile">Profile</a></li>
+      <li><a href="#logout" class="logout">Logout</a></li>
+    </ul>
+  </nav> -->
+
+
+   <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">Customer Portal</div>
+    <button class="navbar-toggler" id="navbar-toggler">&#9776;</button>
+    <ul class="navbar-links" id="navbar-links">
+      <li><a href="#dashboard" class="active">Dashboard</a></li>
+      <li><a href="#my-plan">My Plan</a></li>
+      <li><a href="#usage">Usage</a></li>
+      <li><a href="#billing">Billing</a></li>
+      <li><a href="#payments">Payments</a></li>
+      <li><a href="#notifications">Notifications</a></li>
+      <li><a href="#help">Help</a></li>
+      <li><a href="#logout" class="logout">Logout</a></li>
+    </ul>
+  </nav>
+    </header>
+
+    <script>
+    // Toggle Navbar Links
+const toggler = document.getElementById('navbar-toggler');
+const navbarLinks = document.getElementById('navbar-links');
+
+toggler.addEventListener('click', () => {
+  navbarLinks.style.display = 
+    navbarLinks.style.display === 'flex' ? 'none' : 'flex';
+});
+    </script>
+</body>
+</html>
