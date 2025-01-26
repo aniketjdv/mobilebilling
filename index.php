@@ -3,6 +3,8 @@
 // Include the database configuration file
 include('db_config.php');
 
+session_start();
+$_SESSION["user_id"]=1;
 // Set the customer ID (for demonstration, this is static; in production, use session data or authentication)
 $customerID = 1;
 
@@ -126,6 +128,9 @@ $conn->close();
             </div>
         </div>
     </div>
+
+
+
 
 </body>
 </html>
