@@ -4,9 +4,14 @@
 include('db_config.php');
 
 session_start();
-$_SESSION["user_id"]=1;
+
+if(!isset($_SESSION["user_id"]))
+{
+    header('Location: login.php');
+}
+
 // Set the customer ID (for demonstration, this is static; in production, use session data or authentication)
-$customerID = 1;
+$customerID = $_SESSION['user_id'];
 
 // Fetch customer details
 $sql_customer = "SELECT FullName FROM Customers WHERE CustomerID = ?";
@@ -93,7 +98,7 @@ $conn->close();
             <div class="card">
                 <h2>Current Plan</h2>
                 <p><strong><?php echo htmlspecialchars($planName); ?></strong></p>
-                <p>Monthly Rental: $<?php echo htmlspecialchars($monthlyCost); ?></p>
+                <p>Monthly Rental: <span class="currency">&#x20B9</span><?php echo htmlspecialchars($monthlyCost); ?></p>
                 <p>Renewal Date: <?php echo htmlspecialchars($renewalDate); ?></p>
             </div>
 
@@ -108,7 +113,7 @@ $conn->close();
             <!-- Billing -->
             <div class="card">
                 <h2>Billing</h2>
-                <p>Outstanding Balance: $<?php echo htmlspecialchars($outstandingBalance); ?></p>
+                <p>Outstanding Balance: <span class="currency">&#x20B9</span><?php echo htmlspecialchars($outstandingBalance); ?></p>
                 <p>Due Date: <?php echo htmlspecialchars($dueDate); ?></p>
                 <a href="#" class="button">Pay Now</a>
             </div>
@@ -128,7 +133,10 @@ $conn->close();
             </div>
         </div>
     </div>
-
+    
+    <div class="simulatesection">
+        <button><a href="simulate_usage.php">Simulate</a></button>
+    </div>
 
 
 

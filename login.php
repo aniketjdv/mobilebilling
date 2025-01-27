@@ -1,35 +1,34 @@
 <?php
-// Include the database configuration file
 include('db_config.php');
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Fetch user from the database
-    $sql = "SELECT UserID, PasswordHash, Role FROM Customer WHERE Email = ?";
+    $sql = "SELECT CustomerID, PasswordHash, Role FROM Customers WHERE Email = ?";
     $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("SQL Error: " . $conn->error); // Debugging statement
+    }
+
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
-
-        // Verify the password
         if (password_verify($password, $user['PasswordHash'])) {
-            // Start a session and store user info
             session_start();
-            $_SESSION['user_id'] = $user['UserID'];
+            $_SESSION['user_id'] = $user['CustomerID'];
             $_SESSION['email'] = $email;
-            $_SESSION['role'] = $user['Role']; // Store the role
+            $_SESSION['role'] = $user['Role'];
 
-            // Redirect based on user role
             if ($_SESSION['role'] === 'admin') {
                 header('Location: admin_dashboard.php');
             } else {
-                header('Location: dashboard.php');
+               header('Location: index.php');
+               
             }
             exit;
         } else {
@@ -40,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

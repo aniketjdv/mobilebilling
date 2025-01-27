@@ -6,6 +6,7 @@ include('db_config.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullname'];
     $email = $_POST['email'];
+    $phno=$_POST['phno'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
     $role = $_POST['role']; // Get the role from the form (admin or customer)
@@ -18,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
         // Insert user data into the database
-        $sql = "INSERT INTO Customer (FullName, Email, PasswordHash, Role) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO Customers (FullName, Email,PhoneNumber, PasswordHash, Role) VALUES (?, ?,?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssss', $fullName, $email, $passwordHash, $role);
+        $stmt->bind_param('ssiss', $fullName, $email,$phno, $passwordHash, $role);
 
         if ($stmt->execute()) {
             echo "Signup successful! <a href='login.php'>Login here</a>";
@@ -48,11 +49,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br><br>
 
+        <label for="phno">Phone No:</label>
+        <input type="phno" id="phno" name="phno" required><br><br>
+
+
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br><br>
 
         <label for="confirm_password">Confirm Password:</label>
         <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+
+
 
         <label for="role">Role:</label>
         <select id="role" name="role">
