@@ -10,6 +10,7 @@ if(!isset($_SESSION["user_id"]))
     header('Location: login.php');
 }
 
+
 // Set the customer ID (for demonstration, this is static; in production, use session data or authentication)
 $customerID = $_SESSION['user_id'];
 
@@ -37,7 +38,11 @@ $plan = $result_plan->fetch_assoc();
 $planName = $plan['PlanName'] ?? 'N/A';
 $monthlyCost = $plan['MonthlyCost'] ?? '0';
 $renewalDate = $plan['EndDate'] ?? 'N/A';
-
+if($plan['PlanName']!=NULL){
+    $_SESSION['plan']=$plan['PlanName'];
+}else{
+    $_SESSION['plan']=NULL;
+}
 // Fetch usage data
 $sql_usage = "SELECT UsedMinutes, UsedSMS, UsedData FROM Cust_Usage WHERE CustomerID = ?";
 $stmt_usage = $conn->prepare($sql_usage);

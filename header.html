@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-  
     /* Navbar Styling */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color:rgb(255, 191, 0);
+  background-color: rgb(255, 191, 0);
   color: white;
   padding: 20px 20px;
 }
@@ -42,7 +41,7 @@
 
 .navbar-links a:hover {
   background-color: white;
-  color:rgb(255, 191, 0);
+  color: rgb(255, 191, 0);
   border-radius: 5px;
 }
 
@@ -74,7 +73,7 @@
 @media (max-width: 768px) {
   .navbar-links {
     flex-direction: column;
-    background-color:rgb(255, 191, 0);
+    background-color: rgb(255, 191, 0);
     position: absolute;
     top: 60px;
     right: 0;
@@ -91,41 +90,46 @@
     display: block;
   }
 }
-    
     </style>
-
 </head>
-
-
 <body>
     <header>
-       
-   <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-brand">Customer Portal</div>
-    <button class="navbar-toggler" id="navbar-toggler">&#9776;</button>
-    <ul class="navbar-links" id="navbar-links">
-      <li><a href="/mobilebilling" class="active">Dashboard</a></li>
-      <li><a href="myplan.php">My Plan</a></li>
-      <li><a href="#usage">Usage</a></li>
-      <li><a href="#">Billing</a></li>
-      <li><a href="#">Payments</a></li>
-      <li><a href="#">Notifications</a></li>
-      <li><a href="login.php">Help</a></li>
-      <li><a href="logout.php" class="logout">Logout</a></li>
-    </ul>
-  </nav>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">Customer Portal</div>
+        <button class="navbar-toggler" id="navbar-toggler">&#9776;</button>
+        <ul class="navbar-links" id="navbar-links">
+            <li><a href="/mobilebilling/">Dashboard</a></li>
+            <li><a href="/mobilebilling/myplan.php">My Plan</a></li>
+            <li><a href="myplan2.php">Usage</a></li>
+            <li><a href="#">Billing</a></li>
+            <li><a href="#">Payments</a></li>
+            <li><a href="#">Notifications</a></li>
+            <li><a href="login.php">Help</a></li>
+            <li><a href="logout.php" class="logout">Logout</a></li>
+        </ul>
+    </nav>
     </header>
 
     <script>
     // Toggle Navbar Links
-const toggler = document.getElementById('navbar-toggler');
-const navbarLinks = document.getElementById('navbar-links');
+    const toggler = document.getElementById('navbar-toggler');
+    const navbarLinks = document.getElementById('navbar-links');
 
-toggler.addEventListener('click', () => {
-  navbarLinks.style.display = 
-    navbarLinks.style.display === 'flex' ? 'none' : 'flex';
-});
+    toggler.addEventListener('click', () => {
+        navbarLinks.style.display = 
+            navbarLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Highlight Active Link
+    const currentPath = window.location.pathname;
+    const links = document.querySelectorAll('.navbar-links a');
+    console.log(currentPath);
+    links.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+        }
+    });
     </script>
 </body>
 </html>
