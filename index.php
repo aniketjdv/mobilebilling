@@ -139,10 +139,7 @@ $conn->close();
         </div>
     </div>
     
-    <div class="simulatesection">
-        <button><a href="simulate_usage.php">Simulate</a></button>
-    </div>
-
+    
 
 
 </body>

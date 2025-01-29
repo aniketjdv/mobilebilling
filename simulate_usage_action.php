@@ -22,7 +22,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param('iiids', $customerID, $callMinutes, $smsCount, $dataUsed, $date);
 
 if ($stmt->execute()) {
-    header('Location: simulate_usage.php');
+    header('Location: usage.php');
     exit();
 } else {
     echo "Error simulating usage.";

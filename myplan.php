@@ -16,25 +16,6 @@ else{
     $stmt_plan->execute();
     $result_plan=$stmt_plan->get_result();
 
-    // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //     if (isset($_POST['plan'])){
-    //     $selectedPlan = $_POST['plan'];}
-    //    // $customerID = $_SESSION['user_id']; // Assuming the user is logged in and session contains user_id
-    
-    //     // Assign the selected plan to the customer
-    //     $sql_assign_plan = "INSERT INTO CustomerPlans (CustomerID, PlanID, StartDate, EndDate) 
-    //                         VALUES (?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 MONTH))";
-    //     $stmt_assign_plan = $conn->prepare($sql_assign_plan);
-    //     $stmt_assign_plan->bind_param('ii', $customerID, $selectedPlan);
-    
-    //     if ($stmt_assign_plan->execute()) {
-    //         echo "Plan successfully assigned!";
-    //     } else {
-    //         echo "Error: " . $stmt_assign_plan->error;
-    //     }
-    // }
-
-
 }
 ?>
 <!DOCTYPE html>
@@ -49,8 +30,10 @@ else{
         table {
     width: 88%;
     border-collapse: collapse;
-    margin: 20px;
-    border-radius: 10px;
+    padding: 10px;
+  margin: 48px 10px;
+  box-shadow: 16px 21px 34px -22px black;
+    
 }
 
 td {
