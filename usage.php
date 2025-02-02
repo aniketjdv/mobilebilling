@@ -8,7 +8,7 @@ if(!isset($_SESSION["user_id"]))
 }
 else{
     $customerID = $_SESSION['user_id'];
-    $sql_usage="SELECT * FROM Cust_Usage";
+    $sql_usage="SELECT * FROM Cust_Usage WHERE CustomerID =$customerID";
     $stmt_usage=$conn->prepare($sql_usage);
     $stmt_usage->execute();
     $result_usage=$stmt_usage->get_result();
@@ -115,7 +115,7 @@ else{
                 </table>
             </div>
             <div class="simulation_container">
-        <button><a href="simulate_usage.php">Simulate</a></button>
+        <button><a href="simulate.php">Simulate</a></button>
         </div>
         </div>
 

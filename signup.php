@@ -9,8 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phno=$_POST['phno'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
-    $role = $_POST['role']; // Get the role from the form (admin or customer)
-
+   // $role = $_POST['role']; // Get the role from the form (admin or customer)
+    if($_SESSION['admin_state']==True)
+    {
+        $role='admin';
+    }
+    else{
+        $role='customer';
+    }
     // Validate form fields
     if ($password !== $confirmPassword) {
         echo "Passwords do not match.";
@@ -61,11 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-        <label for="role">Role:</label>
-        <select id="role" name="role">
+        <!-- <label for="role">Role:</label>
+        <select id="role" name="role" default="customer" disabled>
             <option value="customer">Customer</option>
             <option value="admin">Admin</option>
-        </select><br><br>
+        </select><br><br> -->
 
         <button type="submit">Signup</button>
     </form>
