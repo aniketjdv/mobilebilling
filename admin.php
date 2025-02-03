@@ -3,12 +3,14 @@ session_start();
 
 include("db_config.php");
 
-    if(isset($_SESSION['user_id'])) {
-    }
-    else{
+    if(!($_SESSION['role']=='admin')) {
         $_SESSION['admin_state']=True;
         include('signup.php');
+        exit();
     }
+    else{
+        
+    
     
     // Handle Deleting Users
     if (isset($_GET['delete_user'])) {
@@ -46,10 +48,18 @@ include("db_config.php");
         header("Location: admin.php");
     }
     
+  $sql=  "SELECT sm.*, u.Fullname 
+    FROM SupportMessages sm
+    JOIN Customers u ON sm.CustomerID = u.CustomerID
+    ORDER BY sm.Timestamp DESC";
     // Fetch Data
     $users = $conn->query("SELECT * FROM Customers");
     $plans = $conn->query("SELECT * FROM Plans");
-    $messages = $conn->query("SELECT * FROM SupportMessages");
+   //$messages = $conn->query("SELECT * FROM SupportMessages");
+     $messages=$conn->query($sql);
+   // $user_name=$conn->query("Select Fullname FROM Customer where CustomerId = ?");
+
+}
     ?>
     
     <!DOCTYPE html>
@@ -116,16 +126,22 @@ include("db_config.php");
         <!-- Customer Support Messages Section -->
         <h2>Customer Support</h2>
         <table>
-            <tr><th>Message</th><th>Status</th><th>Actions</th></tr>
-            <?php while ($msg = $messages->fetch_assoc()): ?>
             <tr>
-                <td><?= $msg['Message'] ?></td>
-                <td><?= $msg['Status'] ?></td>
-                <td>
-                    <a href="?resolve_message=<?= $msg['MessageID'] ?>">Mark Resolved</a>
-                </td>
+                <th>Name</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Actions</th>
             </tr>
-            <?php endwhile; ?>
+            <?php while ($msg = $messages->fetch_assoc()): ?>
+         <tr>
+        <td><?= htmlspecialchars($msg['Fullname']) ?></td> 
+        <td><?= htmlspecialchars($msg['Message']) ?></td>
+        <td><?= htmlspecialchars($msg['Status']) ?></td>
+        <td>
+            <a href="?resolve_message=<?= $msg['MessageID'] ?>">Mark Resolved</a>
+        </td>
+        </tr>
+        <?php endwhile; ?>
         </table>
     </body>
     </html>
