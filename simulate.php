@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usedSMS = isset($_POST['used_sms']) ? (int)$_POST['used_sms'] : 0;
     $usedData = isset($_POST['used_data']) ? (float)$_POST['used_data'] : 0;
 
-    $customerPlanID =23; // Replace with a valid CustomerPlanID dynamically fetched
+    $customerPlanID =24; //$usage['CustomerPlanID']; // Replace with a valid CustomerPlanID dynamically fetched
 
     $sql_update = "
         UPDATE `Cust_Usage`
@@ -79,8 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulate Usage</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
+    <?include "header.html"?>
     <h2>Plan Details</h2>
     <table>
         <tr>

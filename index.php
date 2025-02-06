@@ -25,7 +25,7 @@ $name = $customer['FullName'] ?? 'Customer';
 
 // Fetch current plan details
 $sql_plan = "
-    SELECT p.PlanName, p.MonthlyCost, cp.StartDate, cp.EndDate
+    SELECT p.PlanName, p.MonthlyCost, p.FreeMinutes, p.FreeSMS, p.FreeData,cp.StartDate, cp.EndDate
     FROM CustomerPlans cp
     JOIN Plans p ON cp.PlanID = p.PlanID
     WHERE cp.CustomerID = ?
@@ -38,6 +38,9 @@ $plan = $result_plan->fetch_assoc();
 $planName = $plan['PlanName'] ?? 'N/A';
 $monthlyCost = $plan['MonthlyCost'] ?? '0';
 $renewalDate = $plan['EndDate'] ?? 'N/A';
+$freeMinutes=$plan['FreeMinutes'] ?? 0;
+$freeSMS=$plan['FreeSMS'] ?? 0;
+$freeData=$plan['FreeData'] ?? 0;
 if($plan['PlanName']!=NULL){
     $_SESSION['plan']=$plan['PlanName'];
 }else{
@@ -110,9 +113,9 @@ $conn->close();
             <!-- Usage Overview -->
             <div class="card">
                 <h2>Usage Overview</h2>
-                <p>Minutes: <?php echo htmlspecialchars($usedMinutes); ?>/200</p>
-                <p>SMS: <?php echo htmlspecialchars($usedSMS); ?>/100</p>
-                <p>Data: <?php echo htmlspecialchars($usedData); ?>GB/5GB</p>
+                <p>Minutes: <?php echo htmlspecialchars($usedMinutes." / ".$freeMinutes); ?></p>
+                <p>SMS: <?php echo htmlspecialchars($usedSMS." / ".$freeSMS); ?></p>
+                <p>Data: <?php echo htmlspecialchars($usedData." / ".$freeData); ?></p>
             </div>
 
             <!-- Billing -->

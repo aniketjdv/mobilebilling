@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+.form_contianer{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 187, 17);
+    padding: 10px;
+}

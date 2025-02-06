@@ -29,8 +29,10 @@ $result = $conn->query("SELECT * FROM SupportMessages WHERE CustomerID = $custom
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Support</title>
     <link rel="stylesheet" href="static/css/support.css">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
+    <?include "header.html"?>
     <h2>Contact Support</h2>
     <form method="POST">
         <textarea name="message" placeholder="Describe your issue..." required></textarea>
