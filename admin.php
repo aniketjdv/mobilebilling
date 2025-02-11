@@ -3,6 +3,7 @@ session_start();
 
 include("db_config.php");
 
+$userID = $_SESSION['user_id'];
     if(!($_SESSION['role']=='admin')) {
         $_SESSION['admin_state']=True;
         include('signup.php');
@@ -60,6 +61,8 @@ include("db_config.php");
    // $user_name=$conn->query("Select Fullname FROM Customer where CustomerId = ?");
 
 }
+
+
     ?>
     
     <!DOCTYPE html>
@@ -68,6 +71,7 @@ include("db_config.php");
         <meta charset="UTF-8">
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="admin.css">
+        <link rel="stylesheet" href="staitc/css/chat.css">
         <script>
             function confirmDelete(type, id) {
                 return confirm(`Are you sure you want to delete this ${type}?`);
@@ -143,6 +147,9 @@ include("db_config.php");
         </tr>
         <?php endwhile; ?>
         </table>
+
+       
+  
     </body>
     </html>
     

@@ -20,6 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Fetch Customer's Messages
 $result = $conn->query("SELECT * FROM SupportMessages WHERE CustomerID = $customerID ORDER BY Timestamp DESC");
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +34,9 @@ $result = $conn->query("SELECT * FROM SupportMessages WHERE CustomerID = $custom
     <title>Customer Support</title>
     <link rel="stylesheet" href="static/css/support.css">
     <link rel="stylesheet" href="static/css/style.css">
+
+    <link rel="stylesheet" href="staitc/css/chat.css">
+   
 </head>
 <body>
     <?include "header.html"?>
@@ -50,5 +57,7 @@ $result = $conn->query("SELECT * FROM SupportMessages WHERE CustomerID = $custom
         </tr>
         <?php endwhile; ?>
     </table>
+
+
 </body>
 </html>

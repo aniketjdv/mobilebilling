@@ -27,6 +27,8 @@ else{
                 border-collapse: collapse;
                 margin: 20px;
                 border-radius: 10px;
+          
+            
             }
 
             td {
@@ -56,8 +58,10 @@ else{
             /* Add a wrapper for horizontal scrolling */
             .table-responsive {
                 overflow-x: auto; /* Allow horizontal scrolling on smaller screens */
+                overflow-y: auto; /* Allow vertical scrolling */
+                max-height: 500px; /* Set a maximum height for the table container */
                 margin: 0 auto;
-            }
+             }
 
             /* Adjust for smaller screens */
             @media screen and (max-width: 768px) {

@@ -58,14 +58,26 @@ $usedSMS = $usage['UsedSMS'] ?? 0;
 $usedData = $usage['UsedData'] ?? 0;
 
 // Fetch billing details
-$sql_billing = "SELECT AmountDue, DueDate FROM Billing WHERE CustomerID = ? AND Status = 'Pending'";
+$sql_billing = "SELECT AmountDue, DueDate FROM Billing WHERE CustomerID = ? AND Status = 'Pending' 
+                ORDER BY DueDate DESC 
+                LIMIT 1";
 $stmt_billing = $conn->prepare($sql_billing);
-$stmt_billing->bind_param('i', $customerID);
+$stmt_billing->bind_param("i", $customerID);
 $stmt_billing->execute();
 $result_billing = $stmt_billing->get_result();
-$billing = $result_billing->fetch_assoc();
-$outstandingBalance = $billing['AmountDue'] ?? 0;
-$dueDate = $billing['DueDate'] ?? 'N/A';
+if ($result_billing->num_rows > 0) {
+    $billing = $result_billing->fetch_assoc();
+    $amountDue = $billing['AmountDue'];
+    $dueDate = $billing['DueDate'];
+
+    $outstandingBalance = $billing['AmountDue'];
+    // $dueDate = $billing['DueDate'] ;
+    // echo "Latest Pending Amount: ₹" . $amountDue . "<br>";
+    // echo "Latest Due Date: " . $dueDate;
+} else {
+    $outstandingBalance =  0;
+    $dueDate =  'N/A';
+}
 
 // Fetch notifications
 $sql_notifications = "SELECT Message FROM Notifications WHERE CustomerID = ? AND IsRead = FALSE";
