@@ -29,28 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
    
     if($conn->query($sql)){
         $flag_sucsess=True;
+        
     }
     else{
         $flag_error=True;
     }
-
- // Check if the latest bill is fully paid (AmountDue = 0)
- $sql_check = "SELECT AmountDue FROM Billing WHERE CustomerID = ? ORDER BY BillID DESC LIMIT 1";
- $stmt_check = $conn->prepare($sql_check);
- $stmt_check->bind_param("i", $customerID);
- $stmt_check->execute();
- $result_check = $stmt_check->get_result();
- $latest_bill = $result_check->fetch_assoc();
- $stmt_check->close();
-
- if ($latest_bill && $latest_bill['AmountDue'] == 0) {
-     // Reset usage data after payment completion
-     $reset_sql = "DELETE FROM Cust_Usage WHERE CustomerID = ?";
-     $stmt_reset = $conn->prepare($reset_sql);
-     $stmt_reset->bind_param("i", $customerID);
-     $stmt_reset->execute();
-     $stmt_reset->close();
- }
 
     $sql_bill="
     SELECT 
