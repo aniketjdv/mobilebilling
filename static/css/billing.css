@@ -1,0 +1,134 @@
+.bill-body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.bill-container{
+    display: flex;
+    height:auto;
+    width: 50vw;
+    background-color: #ffbf00;
+    flex-direction: column;
+    border-radius: 13px;
+    padding: 11px;
+    box-shadow: 5px 3px 18px -3px #6f6c6c;
+}
+.bill-header{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: #ffbf00;
+}
+.logo-bill{
+    width: 20%;
+    height: 8em;
+    background-color: blue;
+    border-radius: 13px 0 0 0;
+}
+.logo-bill img{
+    border-radius: 13px 0 0 0;
+}
+
+.name-section{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    align-items: end;
+    padding-right: 10px;
+    border-radius: 0 13px 0 0;
+}
+
+.name-section h4 {
+    margin: 10;
+}
+.name-section h5 {
+    margin: 0;
+}
+.bill-content{
+    background-color: #fff;
+    width: 100%;
+}
+.bill-footer{
+    background-color: #fff;
+    width: 100%;
+    border-radius:0 0 13px 13px ;
+}
+table ,th, td{
+    border: 1px solid;
+    border-collapse: collapse;
+    
+}
+table{
+    width: 100%;
+    margin-top: 10px;
+}
+th{
+    width: 30%;
+    text-align: left;
+}
+td{
+    text-align: right;
+    padding-right: 10px;
+}
+
+
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .bill-container {
+        width: 90vw; /* Make the container take up more space on smaller screens */
+        padding: 8px; /* Reduce padding for smaller screens */
+    }
+
+    .logo-bill {
+        width: 30%; /* Increase width of the logo on smaller screens */
+        height: 6em; /* Adjust logo size */
+    }
+
+    .name-section {
+        width: 100%; /* Make name section full width on smaller screens */
+        padding-right: 5px;
+    }
+
+    .bill-header {
+        flex-direction: column; /* Stack header elements on smaller screens */
+        align-items: center;
+    }
+
+    th {
+        width: 50%; /* Adjust table header width on smaller screens */
+    }
+
+    td {
+        padding-right: 5px; /* Reduce padding for small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .bill-container {
+        width: 100vw; /* Full width for very small screens */
+    }
+
+    .logo-bill {
+        width: 40%; /* Further increase logo size */
+        height: 5em; /* Adjust logo size further */
+    }
+
+    .name-section {
+        padding-right: 2px; /* Tighten padding for small screens */
+    }
+
+    table, th, td {
+        font-size: 12px; /* Reduce font size for better readability */
+    }
+
+    th {
+        width: 40%; /* Further adjust table header width */
+    }
+
+    td {
+        padding-right: 2px; /* Further reduce padding */
+    }
+}

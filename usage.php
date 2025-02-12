@@ -119,7 +119,7 @@ else{
                 </table>
             </div>
             <div class="simulation_container">
-        <button><a href="simulate.php">Simulate</a></button>
+        <button><a href="simulate2.php">Simulate</a></button>
         </div>
         </div>
 

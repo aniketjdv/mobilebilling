@@ -14,6 +14,21 @@ $stmt->execute();
 
 $result = $stmt->get_result();
 $stmt->close();
+
+// Fetch plan payment history
+$plan_sql = "SELECT PaymentID, Cost, PaymentMethod, PaymentDate FROM Plans_Payments
+    WHERE CustomerID = ?
+    ORDER BY PaymentDate DESC ";
+
+$stmt_plan = $conn->prepare($plan_sql);
+$stmt_plan->bind_param("i", $customerID);
+$stmt_plan->execute();
+
+$result_plan = $stmt_plan->get_result();
+$stmt_plan->close();
+
+
+
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -100,6 +115,37 @@ $conn->close();
     <?php  else: ?>
         <p>No payment history found.</p>
     <?php endif; ?>
+
+
+
+    <h2>Your Plans Payment History</h2>
+  
+    <?php if ($result_plan->num_rows > 0): ?>
+        <table border="1">
+            <thead>
+                <tr>
+                    
+                    <th>Payment Date</th>
+                    <th>Amount Paid (₹)</th>
+                    <th>Payment Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $result_plan->fetch_assoc()): ?>
+                    <tr>
+                       
+                        <td><?= htmlspecialchars($row['PaymentDate']) ?></td>
+                        <td>&#x20B9; <?= number_format($row['Cost'], 2) ?></td>
+                        <td><?= htmlspecialchars($row['PaymentMethod']) ?></td>
+                         </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php  else: ?>
+        <p>No payment history found.</p>
+    <?php endif; ?>
+
+
 
 
 

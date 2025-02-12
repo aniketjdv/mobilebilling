@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_plan'])) {
     if ($stmt_remove->execute()) {
         echo "<p>Plan removed successfully.</p>";
         $plan = null; // Reset the plan to null after removal
+        $_SESSION['plan_flag']=False;
     } else {
         echo "<p>Error removing plan: " . $conn->error . "</p>";
     }

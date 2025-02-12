@@ -1,6 +1,5 @@
 <?php
 include('db_config.php');
-
 // Fetch all available plans
 $sql_plans = "SELECT PlanID, PlanName, MonthlyCost, FreeMinutes, FreeSMS, FreeData, Description FROM Plans";
 $result_plans = $conn->query($sql_plans);
@@ -8,6 +7,41 @@ $result_plans = $conn->query($sql_plans);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectedPlan = $_POST['plan'];
     $customerID = $_SESSION['user_id']; // Assuming the user is logged in and session contains user_id
+
+    // Fetch all available plans
+$sql_plans1 = "SELECT PlanName, MonthlyCost, FreeMinutes, FreeSMS, FreeData FROM Plans WHERE PlanId =?";
+
+$stmt_plan=$conn->prepare($sql_plans1);
+$stmt_plan->bind_param("i",$selectedPlan);
+$stmt_plan->execute();
+$result_plan=$stmt_plan->get_result();
+$planinfo=$result_plan->fetch_assoc();
+$min=$planinfo["FreeMinutes"];
+$sms=$planinfo["FreeSMS"];
+$data=$planinfo["FreeData"];
+$cost=$planinfo['MonthlyCost'];
+$payment_method="Debit Card";
+
+// echo  $billID, $customerID, $cost, $payment_method, $min,$sms,$data;
+    // Insert payment record
+    $sql_payment = "INSERT INTO Plans_Payments (CustomerID, Cost, PaymentMethod,PaymentDate) 
+                    VALUES (?, ?, ?, NOW())";
+    $stmt_payment = $conn->prepare($sql_payment);
+
+    $stmt_payment->bind_param("iis", $customerID, $cost, $payment_method);
+    
+
+// Execute the statement
+if ($stmt_payment->execute() === TRUE) {
+    echo "Payment updated";
+} else {
+    // Provide detailed error message
+    echo "Error: " . $stmt_payment->error;
+}
+
+    $stmt_payment->close();
+
+
 
     // Assign the selected plan to the customer
     $sql_assign_plan = "INSERT INTO CustomerPlans (CustomerID, PlanID, StartDate, EndDate) 
@@ -19,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         echo "Plan successfully assigned!";
         $_SESSION['plan']=$plan['PlanName'];
+        $_SESSION['plan_flag']=True;
     } else {
         echo "Error: " . $stmt_assign_plan->error;
     }
@@ -56,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endwhile; ?>
             </tbody>
         </table>
-        <button type="submit">Select Plan</button>
+        <button type="submit" id="buy-plan-btn" onclick="showmessage()">Buy Plan</button>
     </form>
 
 
@@ -64,5 +99,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        <?php echo $_SESSION['plan'];
        ?>
     </div>
+    <script>
+        function showmessage(){
+            alert("Transaction Succesful")
+            location.reload();
+        }
+    </script>
 </body>
 </html>
