@@ -24,8 +24,8 @@ $payment_method="Debit Card";
 
 // echo  $billID, $customerID, $cost, $payment_method, $min,$sms,$data;
     // Insert payment record
-    $sql_payment = "INSERT INTO Plans_Payments (CustomerID, Cost, PaymentMethod,PaymentDate) 
-                    VALUES (?, ?, ?, NOW())";
+    $sql_payment = "INSERT INTO Plans_Payment (CustomerID, Cost,PaymentDate ,PaymentMethod) 
+                    VALUES (?, ?, NOW(),?)";
     $stmt_payment = $conn->prepare($sql_payment);
 
     $stmt_payment->bind_param("iis", $customerID, $cost, $payment_method);

@@ -16,7 +16,7 @@ $result = $stmt->get_result();
 $stmt->close();
 
 // Fetch plan payment history
-$plan_sql = "SELECT PaymentID, Cost, PaymentMethod, PaymentDate FROM Plans_Payments
+$plan_sql = "SELECT Pid, Cost, PaymentMethod, PaymentDate FROM Plans_Payment
     WHERE CustomerID = ?
     ORDER BY PaymentDate DESC ";
 
