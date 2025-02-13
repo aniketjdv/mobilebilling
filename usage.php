@@ -8,10 +8,16 @@ if(!isset($_SESSION["user_id"]))
 }
 else{
     $customerID = $_SESSION['user_id'];
+    //to get normal usage
     $sql_usage="SELECT * FROM Cust_Usage WHERE CustomerID =$customerID";
     $stmt_usage=$conn->prepare($sql_usage);
     $stmt_usage->execute();
     $result_usage=$stmt_usage->get_result();
+    //toget plans usage
+    $plan_sql="SELECT UsedMinutes,UsedSMS,UsedData FROM CustomerPlans WHERE CustomerID=$customerID";
+    $stmt_plan=$conn->prepare($plan_sql);
+    $stmt_plan->execute();
+    $result_plan=$stmt_plan->get_result();
 }
 ?>
 <!DOCTYPE html>
@@ -118,8 +124,41 @@ else{
                     </tbody>
                 </table>
             </div>
+                        <h3>Plan Usage</h3>
+            <div class="table_responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Used Minutes</th>
+                            <th>Used SMS</th>
+                            <th>Used Data(GB)</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php while ($usage = $result_plan->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo(htmlspecialchars($usage['UsedMinutes']));?></td>
+                            <td><?php echo(htmlspecialchars($usage['UsedSMS']));?></td>
+                            <td><?php echo(htmlspecialchars($usage['UsedData']));?></td>
+                    
+                        </tr>
+                        <?php endwhile?>
+                    </tbody>
+                </table>
+            </div>
             <div class="simulation_container">
-        <button><a href="simulate2.php">Simulate</a></button>
+                <?if($_SESSION['plan_flag']==True)
+                 echo"<button><a href='simulate.php'>Simulate</a></button>";
+
+                 else{
+                        echo "<button><a href='simulate2.php'>Simulate</a></button>";
+                 }
+                ?>
+       
+       
+        
+        
         </div>
         </div>
 

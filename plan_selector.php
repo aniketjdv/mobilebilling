@@ -1,5 +1,6 @@
 <?php
 include('db_config.php');
+
 // Fetch all available plans
 $sql_plans = "SELECT PlanID, PlanName, MonthlyCost, FreeMinutes, FreeSMS, FreeData, Description FROM Plans";
 $result_plans = $conn->query($sql_plans);
