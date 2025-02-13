@@ -51,6 +51,11 @@ try {
     echo "payment update";
    }
     $stmt_payment->close();
+   $message="Your payment of Rs".$amountDue ."has been received.";
+    $sql_notification="INSERT INTO `Notifications` ( `CustomerID`, `Message`, `SentDate`, `IsRead`) VALUES (?, ?, current_timestamp(), '0')";
+   $stmt_notification=$conn->prepare($sql_notification);
+   $stmt_notification->bind_param('is',$customerID,$message);
+   $stmt_notification->execute();
 
     // Update Billing table: Set AmountDue to 0
     $sql_update_bill = "UPDATE Billing SET AmountDue = 0 WHERE BillID = ?";

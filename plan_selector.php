@@ -55,6 +55,12 @@ if ($stmt_payment->execute() === TRUE) {
         echo "Plan successfully assigned!";
         $_SESSION['plan']=$plan['PlanName'];
         $_SESSION['plan_flag']=True;
+
+        $message="Your payment of Rs ".$cost." for your New plan has been received.";
+    $sql_notification="INSERT INTO `Notifications` ( `CustomerID`, `Message`, `SentDate`, `IsRead`) VALUES (?, ?, current_timestamp(), '0')";
+   $stmt_notification=$conn->prepare($sql_notification);
+   $stmt_notification->bind_param('is',$customerID,$message);
+   $stmt_notification->execute();
     } else {
         echo "Error: " . $stmt_assign_plan->error;
     }

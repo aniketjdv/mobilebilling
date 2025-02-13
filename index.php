@@ -43,23 +43,37 @@ $freeSMS=$plan['FreeSMS'] ?? 0;
 $freeData=$plan['FreeData'] ?? 0;
 if($plan['PlanName']!=NULL){
     $_SESSION['plan']=$plan['PlanName'];
+    $_SESSION['plan_flag']=True;
 }else{
     $_SESSION['plan']=NULL;
 }
 // Fetch usage data
-$sql_usage = "SELECT UsedMinutes, UsedSMS, UsedData FROM Cust_Usage WHERE CustomerID = ?";
+$sql_usage = "SELECT SUM(UsedMinutes) AS TotalMinutes, 
+        SUM(UsedSMS) AS TotalSMS, 
+        SUM(UsedData) AS TotalData
+          FROM Cust_Usage WHERE CustomerID = ? ORDER BY UsageID DESC";
 $stmt_usage = $conn->prepare($sql_usage);
 $stmt_usage->bind_param('i', $customerID);
 $stmt_usage->execute();
 $result_usage = $stmt_usage->get_result();
 $usage = $result_usage->fetch_assoc();
-$usedMinutes = $usage['UsedMinutes'] ?? 0;
-$usedSMS = $usage['UsedSMS'] ?? 0;
-$usedData = $usage['UsedData'] ?? 0;
+$usedMinutes = $usage['TotalMinutes'] ?? 0;
+$usedSMS = $usage['TotalSMS'] ?? 0;
+$usedData = $usage['TotalData'] ?? 0;
+
+//fetch plan usage
+$plan_sql="SELECT UsedMinutes,UsedSMS,UsedData FROM CustomerPlans WHERE CustomerID=$customerID";
+$stmt_plan=$conn->prepare($plan_sql);
+$stmt_plan->execute();
+$result_plan=$stmt_plan->get_result();
+$plan_usage=$result_plan->fetch_assoc();
+$plan_usedMinutes = $plan_usage['UsedMinutes'] ?? 0;
+$plan_usedSMS = $plan_usage['UsedSMS'] ?? 0;
+$plan_usedData = $plan_usage['UsedData'] ?? 0;
 
 // Fetch billing details
 $sql_billing = "SELECT AmountDue, DueDate FROM Billing WHERE CustomerID = ? AND Status = 'Pending' 
-                ORDER BY DueDate DESC 
+                ORDER BY BillID DESC 
                 LIMIT 1";
 $stmt_billing = $conn->prepare($sql_billing);
 $stmt_billing->bind_param("i", $customerID);
@@ -71,16 +85,14 @@ if ($result_billing->num_rows > 0) {
     $dueDate = $billing['DueDate'];
 
     $outstandingBalance = $billing['AmountDue'];
-    // $dueDate = $billing['DueDate'] ;
-    // echo "Latest Pending Amount: ₹" . $amountDue . "<br>";
-    // echo "Latest Due Date: " . $dueDate;
+
 } else {
     $outstandingBalance =  0;
     $dueDate =  'N/A';
 }
 
 // Fetch notifications
-$sql_notifications = "SELECT Message FROM Notifications WHERE CustomerID = ? AND IsRead = FALSE";
+$sql_notifications = "SELECT Message FROM Notifications WHERE CustomerID = ? AND IsRead = FALSE ORDER BY NotificationID DESC";
 $stmt_notifications = $conn->prepare($sql_notifications);
 $stmt_notifications->bind_param('i', $customerID);
 $stmt_notifications->execute();
@@ -123,30 +135,41 @@ $conn->close();
             </div>
 
             <!-- Usage Overview -->
-            <div class="card">
+           <?php
+           if($_SESSION['plan_flag']==True){
+           echo" <div class='card'>
                 <h2>Usage Overview</h2>
-                <p>Minutes: <?php echo htmlspecialchars($usedMinutes." / ".$freeMinutes); ?></p>
-                <p>SMS: <?php echo htmlspecialchars($usedSMS." / ".$freeSMS); ?></p>
-                <p>Data: <?php echo htmlspecialchars($usedData." / ".$freeData); ?></p>
-            </div>
-
+                <p>Minutes:$plan_usedMinutes / $freeMinutes</p>
+                <p>SMS:$plan_usedSMS / $freeSMS</p>
+                <p>Data:$plan_usedData / $freeData</p>
+            </div>";
+           }
+           else{
+           echo" <div class='card'>
+                <h2>Usage Overview</h2>
+                <p>Minutes: $usedMinutes</p>
+                <p>SMS: $usedSMS</p>
+                <p>Data: $usedData GB</p>
+            </div>";
+           }
+            ?>
             <!-- Billing -->
             <div class="card">
                 <h2>Billing</h2>
                 <p>Outstanding Balance: <span class="currency">&#x20B9</span><?php echo htmlspecialchars($outstandingBalance); ?></p>
                 <p>Due Date: <?php echo htmlspecialchars($dueDate); ?></p>
-                <a href="#" class="button">Pay Now</a>
+                <a href="payment.php" class="button">Pay Now</a>
             </div>
 
             <!-- Notifications -->
             <div class="card">
                 <h2>Notifications</h2>
                 <?php if (!empty($notifications)): ?>
-                    <ul>
+                    <ol>
                         <?php foreach ($notifications as $notification): ?>
                             <li><?php echo htmlspecialchars($notification); ?></li>
                         <?php endforeach; ?>
-                    </ul>
+                    </ol>
                 <?php else: ?>
                     <p>No new notifications.</p>
                 <?php endif; ?>

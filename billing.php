@@ -110,7 +110,7 @@ $conn->close();
             <tr><th>Used Data</th><td>0 GB</td></tr>
             <tr><th>Total Bill</th><td>&#x20B9; 0.00</td></tr>
         </table>
-    <?php elseif ($bill && $_SESSION['plan_flag']==false): ?>
+    <?php elseif (isset($bill) && $_SESSION['plan_flag']==false): ?>
        
         <table >
             <tr><th>Used Minutes</th><td><?= htmlspecialchars($bill['TotalMinutes']) ?> mins</td></tr>
