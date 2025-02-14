@@ -114,7 +114,7 @@ $conn->close();
             </tr>
         </table>
         <form method="POST">
-    <button type="submit" name="remove_plan">Remove Plan</button>
+    <button type="submit" name="remove_plan" style='height: 3em;width: 10em;color: white;background-color: #d20000;border: none;border-radius: 5px;box-shadow: 2px 2px 5px 1px #979797;margin-bottom: 20px;'>Remove Plan</button>
 </form>
 
     <?php else: ?>

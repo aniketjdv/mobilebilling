@@ -101,10 +101,11 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulate Usage</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/simulate_style.css">
 </head>
 <body>
     <?php include "header.html"; ?>
-    
+    <div class="simulate_container">
     <h2>Plan Details</h2>
     <?php if ($remainingMinutes > 0 || $remainingSMS > 0 || $remainingData > 0): ?>
         <table>
@@ -142,6 +143,6 @@ $conn->close();
     <?php else: ?>
         <h3 style="color:red;">You have used all your resources. Your plan has been deleted.</h3>
     <?php endif; ?>
-
+    </div>
 </body>
 </html>

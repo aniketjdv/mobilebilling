@@ -98,7 +98,7 @@ if ($stmt_payment->execute() === TRUE) {
                 <?php endwhile; ?>
             </tbody>
         </table>
-        <button type="submit" id="buy-plan-btn" onclick="showmessage()">Buy Plan</button>
+        <button type="submit" id="buy-plan-btn"  style='height: 3em;width: 10em;color: white;background-color: #178e07;border: none;border-radius: 5px;box-shadow: 2px 2px 5px 1px #979797;margin-bottom: 20px;' onclick="showmessage()">Buy Plan</button>
     </form>
 
 

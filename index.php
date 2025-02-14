@@ -10,7 +10,7 @@ if(!isset($_SESSION["user_id"]))
     header('Location: login.php');
 }
 
-
+$_SESSION['plan_flag']=False;
 // Set the customer ID (for demonstration, this is static; in production, use session data or authentication)
 $customerID = $_SESSION['user_id'];
 

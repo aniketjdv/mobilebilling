@@ -8,3 +8,11 @@ function genrate(){
     document.getElementById("sms").value=sms
     document.getElementById("data").value=data
 }
+
+document.querySelectorAll('input[type="number"]').forEach(function(input) {
+    input.addEventListener('input', function() {
+        if (parseInt(this.value) < 0) {
+            this.value = 0; // Reset to 0 if negative value is entered
+        }
+    });
+});

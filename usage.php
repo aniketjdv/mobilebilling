@@ -149,10 +149,14 @@ else{
             </div>
             <div class="simulation_container">
                 <?if($_SESSION['plan_flag']==True)
-                 echo"<button><a href='simulate.php'>Simulate</a></button>";
+                 echo"<button style='height: 3em;width: 10em;color: white;background-color: #61b000;;border: none;border-radius: 5px;box-shadow: 2px 2px 5px 1px #979797;margin-bottom: 20px;'>
+                <a href='simulate.php' style='text-decoration: none;color: white;font-size: 1.5em;'>Simulate</a>
+                </button>";
 
                  else{
-                        echo "<button><a href='simulate2.php'>Simulate</a></button>";
+                        echo "<button style='height: 3em;width: 10em;color: white;background-color: #61b000;;border: none;border-radius: 5px;box-shadow: 2px 2px 5px 1px #979797;margin-bottom: 20px;'>
+                        <a href='simulate2.php' style='text-decoration: none;color: white;font-size: 1.5em;'>Simulate</a>
+                        </button>";
                  }
                 ?>
        
