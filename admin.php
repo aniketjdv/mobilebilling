@@ -3,16 +3,21 @@ session_start();
 
 include("db_config.php");
 
-$userID = $_SESSION['user_id'];
+
+if(isset($_SESSION['user_id'])){
+    $userID = $_SESSION['user_id'];
+}
+else{
+    header("Location:admin_login.php");
+}
+
     if(!($_SESSION['role']=='admin')) {
         $_SESSION['admin_state']=True;
-        include('signup.php');
+       
         exit();
     }
     else{
         
-    
-    
     // Handle Deleting Users
     if (isset($_GET['delete_user'])) {
         $userID = $_GET['delete_user'];

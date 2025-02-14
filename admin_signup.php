@@ -1,7 +1,7 @@
 <?php
 // Include the database configuration file
 include('db_config.php');
-$signup_flag=False;
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['fullname'];
@@ -10,9 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address=$_POST['addr'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
-    $role ='customer'; 
-    
-    // Validate form fields
+    $role ='admin'; 
+
     if ($password !== $confirmPassword) {
         echo "Passwords do not match.";
     } else {
@@ -20,13 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
         // Insert user data into the database
-        $sql = "INSERT INTO Customers (FullName, Email,PhoneNumber,Address, PasswordHash, Role) VALUES (?, ?,?, ?, ?,?)";
+        $sql = "INSERT INTO Customers (`FullName`, `Email`,`PhoneNumber`,`Address`, `PasswordHash`, `Role`) VALUES (?, ?,?, ?, ?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssisss', $fullName, $email,$phno, $passwordHash,$address, $role);
+        $stmt->bind_param('ssisss', $fullName, $email,$phno,$address,$passwordHash, $role);
 
         if ($stmt->execute()) {
-            $signup_flag=True;
-          
+            echo "Signup successful! <a href='login.php'>Login here</a>";
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -43,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="static/css/form.css">
 </head>
 <body>
-<div class="form_container">
     <h2>Signup</h2>
     <form method="POST">
         <label for="fullname">Full Name:</label>
@@ -74,21 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <button type="submit">Signup</button>
     </form>
-    <?if($signup_flag==True){
-     echo "<h3 style='color:Green'>Signup successful! </h3><br>
-    
-    <button type='submit' onclick='redirectpage()'>Login</button>";
-    }
-    $signup_flag=false;
-    ?>
-   
-</div>
-
-<script>
-    function redirectpage(){
-        window.location.href="login.php";
-    }
-</script>
+  
 </body>
-
 </html>

@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <script>
         function redirectpage(){
-            window.location.href="signup.php"
+            window.location.href="admin_signup.php"
         }
     </script>
 </body>
