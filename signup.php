@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insert user data into the database
         $sql = "INSERT INTO Customers (FullName, Email,PhoneNumber,Address, PasswordHash, Role) VALUES (?, ?,?, ?, ?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssisss', $fullName, $email,$phno, $passwordHash,$address, $role);
+        $stmt->bind_param('ssisss', $fullName, $email,$phno, $address,$passwordHash, $role);
 
         if ($stmt->execute()) {
             $signup_flag=True;

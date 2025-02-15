@@ -54,7 +54,7 @@ if ($remainingMinutes == 0 && $remainingSMS == 0 && $remainingData == 0) {
     $stmt_delete->bind_param('i', $customerPlanID);
     $stmt_delete->execute();
     $stmt_delete->close();
-    echo "<h3 style='color:red;'>Your plan has been fully used and deleted.</h3>";
+   
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usedMinutes = isset($_POST['used_minutes']) ? (int)$_POST['used_minutes'] : 0;
     $usedSMS = isset($_POST['used_sms']) ? (int)$_POST['used_sms'] : 0;

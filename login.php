@@ -60,10 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Login</button>
     </form>
     <button onclick="redirectpage()">Singup</button>
+    <button onclick="forgetpass()">Forget Password</button>
+    <div class="error-box">
+        
+    </div>
     </div>
     <script>
         function redirectpage(){
             window.location.href="signup.php"
+        }
+        function forgetpass(){
+        window.location.href="forget_password.php"
         }
     </script>
 </body>
