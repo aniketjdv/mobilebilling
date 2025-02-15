@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="static/css/form.css">
 </head>
 <body>
+<div class="form_container">
     <h2>Signup</h2>
     <form method="POST">
         <label for="fullname">Full Name:</label>
@@ -61,16 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="confirm_password">Confirm Password:</label>
         <input type="password" id="confirm_password" name="confirm_password" required><br><br>
 
-
-
-        <!-- <label for="role">Role:</label>
-        <select id="role" name="role" default="customer" disabled>
-            <option value="customer">Customer</option>
-            <option value="admin">Admin</option>
-        </select><br><br> -->
-
         <button type="submit">Signup</button>
     </form>
-  
+</div>
 </body>
 </html>

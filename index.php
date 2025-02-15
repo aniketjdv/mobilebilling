@@ -112,7 +112,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Billing</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body>
     <?php
@@ -176,12 +176,5 @@ $conn->close();
             </div>
         </div>
     </div>
-    
-    
-
-
 </body>
 </html>
-<?php
-
-?>
