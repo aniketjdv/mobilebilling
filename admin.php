@@ -21,8 +21,8 @@ else{
     // Handle Deleting Users
     if (isset($_GET['delete_user'])) {
         $userID = $_GET['delete_user'];
-        $conn->query("DELETE FROM Users WHERE UserID = $userID");
-        header("Location: admin_dashboard.php");
+        $conn->query("DELETE FROM Customers WHERE CustomerID = $userID");
+        header("Location: admin.php");
     }
     
     // Handle Adding Plans
@@ -101,7 +101,7 @@ else{
                 <td><?= $user['FullName'] ?></td>
                 <td><?= $user['Email'] ?></td>
                 <td>
-                    <a href="?delete_user=<?= $user['UserID'] ?>" onclick="return confirmDelete('user', <?= $user['UserID'] ?>);">Delete</a>
+                    <a href="?delete_user=<?= $user['CustomerID'] ?>" onclick="return confirmDelete('user', <?= $user['CustomerID'] ?>);">Delete</a>
                 </td>
             </tr>
             <?php endwhile; ?>

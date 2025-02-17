@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <?
         if($succ_flag){
-        echo "<h3>Password Reset Link (Demo):</h3>";
+        echo "<h3>Password Reset Link:</h3>";
         echo "<a href='reset_password.php?token=$token'>Click here to reset password</a>";
         }
         if($err_flag){
