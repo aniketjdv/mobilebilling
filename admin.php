@@ -54,6 +54,22 @@ else{
         header("Location: admin.php");
     }
     
+    //hadling rates
+    $sql_rate="SELECT Minutes,SMS,Data from Billing_Rate WHERE billrateid = 1" ;
+    $result_rate = $conn->query($sql_rate);
+    $rate=$result_rate->fetch_assoc();
+    $minute_rate=$rate['Minutes'];
+    $SMS_rate=$rate['SMS'];
+    $Data_rate=$rate['Data'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Minutes'])) {
+        $new_minute=$_POST['Minutes'];
+        $new_SMS=$_POST['SMS'];
+        $new_Data=$_POST['Data'];
+        $conn->query("UPDATE Billing_Rate SET `Minutes`=$new_minute,`SMS`=$new_SMS,`Data`=$new_Data WHERE billrateid=1");
+        
+    }
+
+
   $sql=  "SELECT sm.*, u.Fullname 
     FROM SupportMessages sm
     JOIN Customers u ON sm.CustomerID = u.CustomerID
@@ -132,6 +148,29 @@ else{
             <?php endwhile; ?>
         </table>
     
+                <!-- Manage Rates -->
+                 <h2>Usage Rates</h2>
+                 <table>
+                    <tr>
+                        <th>Minutes </th>
+                        <th>SMS</th>
+                        <th>Data</th>
+                </tr>
+                <tr>
+                    <td>₹<?echo $minute_rate?>/Minute</td>
+                    <td>₹<?echo $SMS_rate?>/SMS</td>
+                    <td>₹<?echo $Data_rate?>/GB</td>
+                </tr>
+                 </table>
+                <h3>SET Rates</h3>
+                <form method="POST" action="admin.php">
+                    <input type="number" name="Minutes" placeholder="Enter Minutes Rate">
+                    <input type="number" name="SMS" step="0.1" placeholder="Enter SMS Rate">
+                    <input type="number" name="Data" placeholder="Enter Data Rate">
+                    <button type="submit">SET</button>
+                </form>
+
+
         <!-- Customer Support Messages Section -->
         <h2>Customer Support</h2>
         <table>

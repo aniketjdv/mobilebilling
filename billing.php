@@ -34,13 +34,20 @@ $zero_bill = ($latest_bill && $latest_bill['AmountDue'] == 0);
 echo $zero_bill;
 // SQL query to calculate total bill if the latest bill is not zero
 if (!$zero_bill) {
+    //to get rates 
+    $sql_rate="SELECT Minutes,SMS,Data from Billing_Rate WHERE billrateid = 1" ;
+    $result_rate = $conn->query($sql_rate);
+    $rate=$result_rate->fetch_assoc();
+    $minute_rate=$rate['Minutes'];
+    $SMS_rate=$rate['SMS'];
+    $Data_rate=$rate['Data'];
     $sql_usage = "
         SELECT 
             CustomerID, 
             SUM(UsedMinutes) AS TotalMinutes, 
             SUM(UsedSMS) AS TotalSMS, 
             SUM(UsedData) AS TotalData, 
-            (SUM(UsedMinutes) * 1 + SUM(UsedSMS) * 0.5 + SUM(UsedData) * 10) AS TotalBill 
+            (SUM(UsedMinutes) * $minute_rate + SUM(UsedSMS) * $SMS_rate + SUM(UsedData) * $Data_rate) AS TotalBill 
         FROM Cust_Usage
         WHERE CustomerID = ?
         GROUP BY CustomerID;
@@ -103,7 +110,7 @@ $conn->close();
             <div class="bill-content">
                 
             <?php if ($zero_bill && $_SESSION['plan_flag']==false): ?>
-        <p>Your latest bill is ₹0. Usage details are reset.</p>
+        <p>Your latest bill is ₹0. You have alredy paid the bill</p>
         <table >
             <tr><th>Used Minutes</th><td>0 mins</td></tr>
             <tr><th>Used SMS</th><td>0 SMS</td></tr>
@@ -121,7 +128,7 @@ $conn->close();
     <?php elseif($_SESSION['plan_flag']==True):?> 
         <table>
             <tr><th>Plan Name:</th><td><?echo $plan["PlanName"]?></td></tr>
-            <tr><th>Amount Paid</th><td><?echo $plan["MonthlyCost"]?></td></tr>
+            <tr><th>Amount Paid </th><td><?echo "₹".$plan["MonthlyCost"]?></td></tr>
         </table>   
     <?php else: ?>
         <p>No usage records found.</p>
